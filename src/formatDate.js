@@ -9,13 +9,13 @@
  */
 function formatDate(date, fromFormat, toFormat) {
   // write code here
-  const fromSeparator = fromFormat[3];
-  const toSeparator = toFormat[3];
+  const fromSeparator = fromFormat[fromFormat.length - 1];
+  const toSeparator = toFormat[toFormat.length - 1];
   const words = date.split(fromSeparator);
   const orgDate = {};
   let result = '';
 
-  for (let i = 0; i < words.length; i++) {
+  for (let i = 0; i < fromFormat.length; i++) {
     const key = fromFormat[i];
 
     orgDate[key] = words[i];
@@ -35,11 +35,13 @@ function formatDate(date, fromFormat, toFormat) {
     orgDate['YY'] = orgDate['YYYY'].substring(2);
   }
 
-  for (let i = 0; i < 2; i++) {
-    result += orgDate[toFormat[i]] + toSeparator;
-  }
+  for (let i = 0; i < toFormat.length - 1; i++) {
+    result += orgDate[toFormat[i]];
 
-  result += orgDate[toFormat[2]];
+    if (i < toFormat.length - 2) {
+      result += toSeparator;
+    }
+  }
 
   return result;
 }
